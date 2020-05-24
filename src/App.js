@@ -6,14 +6,14 @@ import Form from "./Components/Form"
 const App = () => {
   return (
     <div className='App'>
-    <Route path='/'>
+      <h1>Lambda Eats</h1>
+      <p>Stay coding, while you eat</p>
+    <Route exact path='/'>
       <Homepage />
     </Route>
     <Route path='/pizza'>
       <Form />
     </Route>
-      <h1>Lambda Eats</h1>
-      <p>Stay coding, while you eat</p>
     </div>
   );
 };
