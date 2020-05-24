@@ -7,6 +7,7 @@ export default function Form(){
         size: ['Small', 'Medium', 'Large', 'Extra Large', 'Family Stuffer'],
         sauce: ['Original Tomato', 'Garlic Ranch', 'BBQ Sauce', 'Spinach Alfredo'],
         toppings: ['Pepperoni', 'Sausage', 'Canadian Bacon', 'Spicy Italian Sausage', 'Grilled Chicken', 'Onions', 'Green Peppers', 'Diced Tomatoes', 'Black Olives', 'Roasted Garlic', 'Artichoke Hearts', 'Three Cheese', 'Pinapple', 'Extra Cheese'],
+        special: '',
     });
 
     const change = (e) => {
@@ -42,7 +43,7 @@ export default function Form(){
                     value={formState.size.selected}
                     onChange={change} 
                     >
-                    {formState.size.map(size => (
+                    {['Small', 'Medium', 'Large', 'Extra Large', 'Family Stuffer'].map(size => (
                         <option 
                             id={size}
                             key={size.id} 
