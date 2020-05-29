@@ -22,8 +22,8 @@ const App = () => {
         <Route exact path='/'>
           <Homepage />
         </Route>
-        <Route path='/pizza' setOrder={setOrder}>
-          <Pizza />
+        <Route path='/pizza'>
+          <Pizza  setOrder={setOrder}/>
         </Route>
         <Route path='/order'>
           <Order order={order} />
