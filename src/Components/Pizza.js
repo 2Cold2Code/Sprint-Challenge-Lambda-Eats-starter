@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 export default function Pizza(props){
   // state && props
@@ -9,11 +9,7 @@ export default function Pizza(props){
   const toppingsList = ['Pepperoni', 'Sausage', 'Canadian Bacon', 'Spicy Italian Sausage', 'Grilled Chicken', 'Onions', 'Green Peppers', 'Diced Tomatoes', 'Black Olives', 'Roasted Garlic', 'Artichoke Hearts', 'Three Cheese', 'Pinapple', 'Extra Cheese']
 
     const [pizzaState, setPizzaState] = useState({
-        name: '',
-        size: [],
-        sauce: [],
-        toppings: [],
-        special: '',
+       
     });
     
     const [errorState, setErrorState] = useState({
@@ -24,6 +20,24 @@ export default function Pizza(props){
         special: ''
     })
 
+// effects
+
+   useEffect(()=>{
+       setPizzaState({...pizzaState, [pizzaState.size]:
+            {...pizzaState.size, [pizzaState.size]: pizzaState.value}, [pizzaState.size]: ""
+        }
+    )},  [pizzaState.size])
+
+    useEffect(()=>{
+        setPizzaState({...pizzaState, [pizzaState.toppings]:
+            {...pizzaState.toppings, [pizzaState.toppings]: pizzaState.value}, [pizzaState.toppings]: ""
+        }
+    )
+    }, [pizzaState.toppings])
+    
+    useEffect(()=>{
+       setOrder({...pizzaState, [pizzaState.name]: pizzaState.value})
+   }, [pizzaState])
     //handlers
 
     const change = (e) => {
@@ -44,7 +58,7 @@ export default function Pizza(props){
 
 
     return(
-        <Pizza onSubmit={submit}>
+        <form onSubmit={submit}>
             <label 
                 htmlFor='name'>
                     Name:
@@ -62,8 +76,7 @@ export default function Pizza(props){
                 <select 
                     id='size' 
                     name='size' 
-                    selected='medium' 
-                    value={pizzaState.size.selected}
+                    value={pizzaState.size}
                     onChange={change} 
                     >
                     {[
@@ -125,7 +138,7 @@ export default function Pizza(props){
                     placeholder='Anything else we need to know to help get you the food you want?'
                     onChange={change}/>
             </label>
-            <button id='add' type='submit' onSubmit={submit}>Add To Order</button>
-        </Pizza>
+            <button id='add' type='submit' submit={submit}>Add To Order</button>
+        </form>
     )
 }
