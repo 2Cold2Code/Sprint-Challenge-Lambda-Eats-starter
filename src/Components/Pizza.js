@@ -1,41 +1,50 @@
 import React, {useState} from 'react';
 
-export default function Form(){
-  // state
+export default function Pizza(props){
+  // state && props
+  
+  const {setOrder} = props;
+  const sizes = ['Small', 'Medium', 'Large', 'Extra Large', 'Family Stuffer']
+  const sauces = ['Original Tomato', 'Garlic Ranch', 'BBQ Sauce', 'Spinach Alfredo']
+  const toppingsList = ['Pepperoni', 'Sausage', 'Canadian Bacon', 'Spicy Italian Sausage', 'Grilled Chicken', 'Onions', 'Green Peppers', 'Diced Tomatoes', 'Black Olives', 'Roasted Garlic', 'Artichoke Hearts', 'Three Cheese', 'Pinapple', 'Extra Cheese']
 
-    const [formState, setFormState] = useState({
+    const [pizzaState, setPizzaState] = useState({
         name: '',
-        size: ['Small', 'Medium', 'Large', 'Extra Large', 'Family Stuffer'],
-        sauce: ['Original Tomato', 'Garlic Ranch', 'BBQ Sauce', 'Spinach Alfredo'],
-        toppings: ['Pepperoni', 'Sausage', 'Canadian Bacon', 'Spicy Italian Sausage', 'Grilled Chicken', 'Onions', 'Green Peppers', 'Diced Tomatoes', 'Black Olives', 'Roasted Garlic', 'Artichoke Hearts', 'Three Cheese', 'Pinapple', 'Extra Cheese'],
+        size: [],
+        sauce: [],
+        toppings: [],
         special: '',
     });
     
-    const [orderState, setOrderState] = useState({})
-    
-const [errorState, setErrorState] = useState({
-    name: '',
-    size: '',
-    sauce: '',
-    toppings: '',
-    special: ''
-})
+    const [errorState, setErrorState] = useState({
+        name: '',
+        size: '',
+        sauce: '',
+        toppings: '',
+        special: ''
+    })
 
     //handlers
 
     const change = (e) => {
         e.persist();
-        setFormState({...formState, [e.target.name]: e.target.value})
+        e.target.checked ? 
+        setPizzaState({...pizzaState, toppings: {
+            ...pizzaState.toppings, [e.target.name]: e.target.name}
+        }) :
+        setPizzaState({...pizzaState, [e.target.name]: e.target.value})
     }
 
     const submit = (e) => {
         e.preventDefault()
-        console.log(formState)
+        console.log(pizzaState)
+        setOrder({...pizzaState, [e.target.name]: e.target.value})
+        setPizzaState({...pizzaState, [e.target.name]: ''})
     }
 
 
     return(
-        <form onSubmit={submit}>
+        <Pizza onSubmit={submit}>
             <label 
                 htmlFor='name'>
                     Name:
@@ -44,7 +53,7 @@ const [errorState, setErrorState] = useState({
                     id='name' 
                     name='name' 
                     placeholder='Please provide a name' 
-                    value={formState.name}
+                    value={pizzaState.name}
                     onChange={change}/>
             </label>
 
@@ -54,16 +63,22 @@ const [errorState, setErrorState] = useState({
                     id='size' 
                     name='size' 
                     selected='medium' 
-                    value={formState.size.selected}
+                    value={pizzaState.size.selected}
                     onChange={change} 
                     >
-                    {['Small', 'Medium', 'Large', 'Extra Large', 'Family Stuffer'].map(size => (
+                    {[
+                        'Small', 
+                        'Medium', 
+                        'Large', 
+                        'Extra Large', 
+                        'Family Stuffer'].map((size, index) => 
+                            (
                         <option 
                             id={size}
-                            key={size.id} 
+                            key={pizzaState.size+Date.now()} 
                             name={size} 
                             value={size}
-                            >{size}
+                        >{size}
                         </option>
                     ))}
                 </select>
@@ -94,8 +109,8 @@ const [errorState, setErrorState] = useState({
             id={topping}
             name={topping}
             type="checkbox"
-            checked={formState.checked}
-            value={formState.name}
+            checked={pizzaState.checked}
+            value={pizzaState.name}
             onChange={change}
           />
               </label>
@@ -106,11 +121,11 @@ const [errorState, setErrorState] = useState({
                 <textarea 
                     id='special' 
                     name='special' 
-                    value={formState.special} 
+                    value={pizzaState.special} 
                     placeholder='Anything else we need to know to help get you the food you want?'
                     onChange={change}/>
             </label>
             <button id='add' type='submit' onSubmit={submit}>Add To Order</button>
-        </form>
+        </Pizza>
     )
 }
