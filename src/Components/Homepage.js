@@ -4,6 +4,10 @@ import {Link} from 'react-router-dom'
 export default function Homepage() {
 
     return (
-        <Link to='/pizza'>Build Your Own Pizza</Link>
+        <Link to='/pizza'>
+            <button type='button'>
+            Build Your Own Pizza
+            </button>
+        </Link>
     )
 }
